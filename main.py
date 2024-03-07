@@ -36,7 +36,6 @@ async def send_random_pic(message: types.Message):
 
 @dp.message()
 async def echo(message: types.Message):
-    await message.answer("Привет")
     await message.answer(message.text)
 
 
