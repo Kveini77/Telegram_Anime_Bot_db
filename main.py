@@ -25,15 +25,9 @@ async def start(message: types.Message):
                          f"Ваш ник: {message.from_user.username}!"
                          f"Ваше имя: {message.from_user.first_name}!")
 
-# @dp.message(Command("pic"))
-# async def send_pic(message: types.Message):
-#     file = types.FSInputFile("images/cat.jpg")
-#     await message.answer_photo(file, caption="Котик")
-#     await message.reply("Котик")
 
-
-@dp.message(Command("pic"))
-async def send_pic(message: types.Message):
+@dp.message(Command("random_pic"))
+async def send_random_pic(message: types.Message):
     photos = os.listdir(r'C:\Users\Admin\PycharmProjects\First_Telegram_bot\images')
     random_photo = random.choice(photos)
     file = types.FSInputFile(random_photo)
