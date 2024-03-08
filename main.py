@@ -1,6 +1,7 @@
 import asyncio
 import os
 import random
+from pathlib import Path
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from dotenv import load_dotenv
@@ -19,18 +20,17 @@ async def start(message: types.Message):
     (await message.answer(f"Привет, {message.from_user.first_name}!"))
 
 @dp.message(Command("myinfo"))
-async def start(message: types.Message):
+async def myinfo(message: types.Message):
     logging.info(message.from_user)
-    await message.answer(f"Ваш id: {message.from_user.id}!"
-                         f"Ваш ник: {message.from_user.username}!"
-                         f"Ваше имя: {message.from_user.first_name}!")
+    await message.answer(f"Ваш id: {message.from_user.id}!\n"
+                         f"Ваш ник: {message.from_user.username}!\n"
+                         f"Ваше имя: {message.from_user.first_name}!\n")
 
 
 @dp.message(Command("random_pic"))
 async def send_random_pic(message: types.Message):
-    photos = os.listdir(r'C:\Users\Admin\PycharmProjects\First_Telegram_bot\images')
-    random_photo = random.choice(photos)
-    file = types.FSInputFile(random_photo)
+    photos = os.listdir(Path("images"))
+    file = types.FSInputFile(random.choice(photos))
     await message.answer_photo(file, caption="Котик")
 
 
