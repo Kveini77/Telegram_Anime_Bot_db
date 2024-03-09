@@ -2,15 +2,15 @@ import asyncio
 import logging
 from bot import bot, dp
 from handlers.start import start_router
-from handlers.pic import pic_router
-from handlers.echo import echo_router
+from handlers.shop import shop_router
+from handlers.reviews import reviews_router
 
 
 async def main():
     # Регитсрация роутеров
-    dp.include_router(pic_router)
+    dp.include_router(shop_router)
     dp.include_router(start_router)
-    dp.include_router(echo_router)
+    dp.include_router(reviews_router)
     # запуск бота
     await dp.start_polling(bot)
 

@@ -4,9 +4,7 @@ from os import getenv
 
 from aiogram import Router
 
-
 bot_router = Router()
-
 
 load_dotenv()
 bot = Bot(token=getenv("BOT_TOKEN"))
