@@ -11,20 +11,20 @@ async def start(message: types.Message):
             [
                 types.InlineKeyboardButton(text="Контакты", callback_data="contacts"),
                 types.InlineKeyboardButton(text="О нас", callback_data="about")
+            ],
+            [
+                types.InlineKeyboardButton(text="Магазин", callback_data="shop"),
+                types.InlineKeyboardButton(text="Отзывы", callback_data="reviews")
             ]
 
         ]
     )
     logging.info(message.from_user)
-    (await message.answer_photo(types.FSInputFile("images/anixart.png"), caption=f"Здравствуйте, {message.from_user.first_name}!\n"
-                                                                                 f"Мои команды:\n"
-                                                                                 f"/start\n"
-                                                                                 f"/shop\n"
-                                                                                 f"/reviews\n", reply_markup=kb))
+    (await message.answer_photo(types.FSInputFile("images/anixart.png"), caption=f"Здравствуйте, {message.from_user.first_name}!", reply_markup=kb))
 
 
 @start_router.callback_query(F.data == "contacts")
-async def about(callback: types.CallbackQuery):
+async def contacts(callback: types.CallbackQuery):
     await callback.message.answer("Название приложения: Anixart\n"
                                   "Email поддержки: support@.com\n"
                                   "Телефон поддержки: +1-800-ANIME-APP\n"
@@ -34,6 +34,7 @@ async def about(callback: types.CallbackQuery):
                                   "ВКонтакте: https://vk.com/\n"
                                   "Instagram: https://instagram.com/\n"
                                   "Facebook: https://facebook.com/")
+
 
 @start_router.callback_query(F.data == "about")
 async def about(callback: types.CallbackQuery):

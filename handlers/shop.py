@@ -1,11 +1,11 @@
 from aiogram import Router, F, types
-from aiogram.filters import Command
 import logging
+from handlers.start import start_router
 shop_router = Router()
 
 
-@shop_router.message(Command("shop"))
-async def about(message: types.Message):
+@start_router.callback_query(F.data == "shop")
+async def shop(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -26,5 +26,5 @@ async def about(message: types.Message):
 
         ]
     )
-    logging.info(message.from_user)
-    (await message.answer(f"Наш магазин, {message.from_user.first_name}!", reply_markup=kb))
+    logging.info(callback.message.from_user)
+    (await callback.message.answer_photo(types.FSInputFile("images/shop.jpg"), caption=f"Наш магазин!", reply_markup=kb))

@@ -2,24 +2,25 @@ from aiogram import Router, F, types
 from aiogram.filters import Command
 import logging
 import random
+from handlers.start import start_router
 reviews_router = Router()
 
 
-@reviews_router.message(Command("reviews"))
-async def about(message: types.Message):
+@start_router.callback_query(F.data == "reviews")
+async def reviews(callback: types.CallbackQuery):
     kb = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                types.InlineKeyboardButton(text="Случайные отзывы", callback_data="reviews"),
+                types.InlineKeyboardButton(text="Случайные отзывы", callback_data="random_reviews"),
             ]
         ]
     )
-    logging.info(message.from_user)
-    (await message.answer(f"Нажмите на кнопку 'случайные отзывы' что бы увидеть случайны отзыв!", reply_markup=kb))
+    logging.info(callback.message.from_user)
+    (await callback.message.answer(f"Нажмите на кнопку 'случайные отзывы' что бы увидеть случайны отзыв!", reply_markup=kb))
 
 
-@reviews_router.callback_query(F.data == "reviews")
-async def about(callback: types.CallbackQuery):
+@start_router.callback_query(F.data == "random_reviews")
+async def random_reviews(callback: types.CallbackQuery):
     review1 = "Отличное приложение! Удобное управление и огромный выбор аниме."
     review2 = "Супер! Много крутых аниме, всегда что-то новое!"
     review3 = "Люблю этот сервис! Всегда находишь что-то интересное."
