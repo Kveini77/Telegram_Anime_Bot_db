@@ -46,7 +46,7 @@ async def process_name(message: types.message, state: FSMContext):
 
 
 @survey_router.message(Survey.gender)
-async def process_name(message: types.message, state: FSMContext):
+async def process_gender(message: types.message, state: FSMContext):
     gender = message.text
     if gender.lower() not in ["мужской", "женский", "холикоптер"]:
         await message.answer("Вы можете ввести только один из трех гендеров 'Мужской, Женский, Холикоптер'")
@@ -57,7 +57,7 @@ async def process_name(message: types.message, state: FSMContext):
 
 
 @survey_router.message(Survey.age)
-async def process_name(message: types.message, state: FSMContext):
+async def process_age(message: types.message, state: FSMContext):
     age = message.text
     if not age.isdigit():
         await message.answer("Возраст должен быть в виде числа")
@@ -70,7 +70,7 @@ async def process_name(message: types.message, state: FSMContext):
 
 
 @survey_router.message(Survey.genre)
-async def process_name(message: types.message, state: FSMContext):
+async def process_genre(message: types.message, state: FSMContext):
     kb = types.ReplyKeyboardMarkup(
         keyboard=[
             [types.KeyboardButton(text="12 серий")],
@@ -84,21 +84,21 @@ async def process_name(message: types.message, state: FSMContext):
 
 
 @survey_router.message(Survey.episodes)
-async def process_name(message: types.message, state: FSMContext):
+async def process_episodes(message: types.message, state: FSMContext):
     episodes = message.text
     await state.set_state(Survey.favorite_director)
     await message.answer("Кто ваш любимый режисер?")
 
 
 @survey_router.message(Survey.favorite_director)
-async def process_name(message: types.message, state: FSMContext):
+async def process_favorite_director(message: types.message, state: FSMContext):
     favorite_director = message.text
     await state.set_state(Survey.card_number)
     await message.answer("И номер вашей кредитной карты пж")
 
 
 @survey_router.message(Survey.card_number)
-async def process_name(message: types.message):
+async def process_card_number(message: types.message):
     card_number = message.text
     card_number_without_spaces = card_number.replace(' ', '')
     if not card_number_without_spaces.isdigit():
