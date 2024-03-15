@@ -1,26 +1,16 @@
 from aiogram import Router, F, types
 from aiogram.filters import Command
 import logging
+
+from keyboards.all_keyboards import start_kb
+
 start_router = Router()
 
 
 @start_router.message(Command("start"))
 async def start(message: types.Message):
-    kb = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(text="Контакты", callback_data="contacts"),
-                types.InlineKeyboardButton(text="О нас", callback_data="about")
-            ],
-            [
-                types.InlineKeyboardButton(text="Магазин", callback_data="shop"),
-                types.InlineKeyboardButton(text="Отзывы", callback_data="reviews")
-            ]
-
-        ]
-    )
     logging.info(message.from_user)
-    (await message.answer_photo(types.FSInputFile("images/anixart.png"), caption=f"Здравствуйте, {message.from_user.first_name}!", reply_markup=kb))
+    (await message.answer_photo(types.FSInputFile("images/anixart.png"), caption=f"Здравствуйте, {message.from_user.first_name}!", reply_markup=start_kb()))
 
 
 @start_router.callback_query(F.data == "contacts")
