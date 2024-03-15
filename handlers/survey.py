@@ -41,6 +41,7 @@ async def process_name(message: types.message, state: FSMContext):
         ]
     )
     name = message.text
+    await state.update_data(name=name)
     await state.set_state(Survey.gender)
     await message.answer("Какой ваш пол?", reply_markup=kb)
 
@@ -59,6 +60,7 @@ async def process_gender(message: types.message, state: FSMContext):
 @survey_router.message(Survey.age)
 async def process_age(message: types.message, state: FSMContext):
     age = message.text
+    await state.update_data(age=int(age))
     if not age.isdigit():
         await message.answer("Возраст должен быть в виде числа")
         return
@@ -98,7 +100,7 @@ async def process_favorite_director(message: types.message, state: FSMContext):
 
 
 @survey_router.message(Survey.card_number)
-async def process_card_number(message: types.message):
+async def process_card_number(message: types.message, state: FSMContext):
     card_number = message.text
     card_number_without_spaces = card_number.replace(' ', '')
     if not card_number_without_spaces.isdigit():
@@ -107,4 +109,6 @@ async def process_card_number(message: types.message):
     elif not len(card_number_without_spaces) == 16:
         await message.answer("Вы должны ввести номер карты из 16 цифр в формате '**** **** **** ****'")
         return
+    data = await state.get_data()
+    print(data)
     await message.answer("спс за карточку броу")
