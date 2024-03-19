@@ -111,4 +111,4 @@ async def process_card_number(message: types.message, state: FSMContext):
         return
     data = await state.get_data()
     print(data)
-    await message.answer("спс за карточку броу")
+    await message.answer(f"спс за карточку броу {data["name"]}")
